@@ -1,12 +1,15 @@
 package com.example.listusers
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.AdapterView
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ListView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -20,6 +23,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var ageET: EditText
     private lateinit var saveBTN:Button
     private lateinit var usersLV: ListView
+    private lateinit var toolbar: Toolbar
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -32,6 +36,9 @@ class MainActivity : AppCompatActivity() {
         nameET = findViewById(R.id.nameET)
         ageET = findViewById(R.id.ageET)
         saveBTN = findViewById(R.id.saveBTN)
+        toolbar = findViewById(R.id.toolbarTB)
+        setSupportActionBar(toolbar)
+        title = getString(R.string.katalog_users)
         usersLV = findViewById(R.id.usersLV)
         val adapter = ArrayAdapter<User>(this,android.R.layout.
         simple_expandable_list_item_1,users)
@@ -67,6 +74,22 @@ class MainActivity : AppCompatActivity() {
             }
 
     }
+
+
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu,menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.exitMN ->finish()
+            else -> return super.onOptionsItemSelected(item)
+        }
+    return super.onOptionsItemSelected(item)
+    }
+
 }
 
 data class User(val name:String, val age:Int){

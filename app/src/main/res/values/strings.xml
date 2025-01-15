@@ -4,4 +4,5 @@
     <string name="name_input">Имя</string>
     <string name="age_input">Возраст</string>
     <string name="save_input">Сохранить</string>
+    <string name="exit_input">Выход</string>
 </resources>
