@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">ListUsers</string>
+    <string name="katalog_users">Каталог пользователей</string>
+    <string name="name_input">Имя</string>
+    <string name="age_input">Возраст</string>
+    <string name="save_input">Сохранить</string>
+</resources>
