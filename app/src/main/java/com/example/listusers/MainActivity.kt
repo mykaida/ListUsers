@@ -65,17 +65,9 @@ class MainActivity : AppCompatActivity() {
             nameET.text.clear()
             ageET.text.clear()
         }
-        usersLV.onItemClickListener =
-            AdapterView.OnItemClickListener { parent, v, position, id ->
-                val note = adapter.getItem(position)
-                adapter.remove(note)
-                Toast.makeText(this, "Такой нам не нужен: $note", Toast.LENGTH_LONG).show()
+        usersLV.onItemClickListener = MyDialog.createAlertDialog(this, adapter)
 
             }
-
-    }
-
-
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu,menu)
@@ -90,10 +82,4 @@ class MainActivity : AppCompatActivity() {
     return super.onOptionsItemSelected(item)
     }
 
-}
-
-data class User(val name:String, val age:Int){
-    override fun toString(): String {
-        return "Имя: $name  Возраст: $age"
-    }
 }
