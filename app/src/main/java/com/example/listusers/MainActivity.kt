@@ -1,5 +1,6 @@
 package com.example.listusers
 
+import UserViewModel
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -14,10 +15,12 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 
 class MainActivity : AppCompatActivity() {
 
-    val users:MutableList<User> = mutableListOf()
+    private lateinit var userViewModel: UserViewModel
 
     private lateinit var nameET: EditText
     private lateinit var ageET: EditText
@@ -40,9 +43,16 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         title = getString(R.string.katalog_users)
         usersLV = findViewById(R.id.usersLV)
+        //Устанавливаем слушатель
+        userViewModel = ViewModelProvider(this)[UserViewModel::class.java]
         val adapter = ArrayAdapter<User>(this,android.R.layout.
-        simple_expandable_list_item_1,users)
+        simple_expandable_list_item_1,userViewModel.users)
         usersLV.adapter = adapter
+        userViewModel.currentUser.observe(this, Observer {
+            usersLV.adapter = adapter
+        })
+
+
 
         saveBTN.setOnClickListener {
             var ageInt = 0
@@ -56,11 +66,11 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this,"Возраст что?",Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
-            if(ageInt <= 0){
+            if(ageInt <= 0 || ageInt >120){
                 Toast.makeText(this,"Возраст что?",Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
-            users.add(User(nameET.text.toString(),ageInt))
+            userViewModel.users.add(User(nameET.text.toString(),ageInt))
             adapter.notifyDataSetChanged()
             nameET.text.clear()
             ageET.text.clear()
